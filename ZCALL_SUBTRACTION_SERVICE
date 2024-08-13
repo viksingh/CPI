@@ -1,0 +1,30 @@
+*&---------------------------------------------------------------------*
+*& Report ZGREET_PROGRAM
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zcall_subtraction_service.
+
+
+DATA: lo_service TYPE REF TO ZCO_SUBTRACTION_SERVICE.
+
+
+DATA: ls_req TYPE ZREMOVE_RECORD_REQUEST.
+
+CREATE OBJECT lo_service.
+
+ls_req-in = 1.
+ls_req-name = 'Vikas Singh'.
+
+TRY.
+
+    CALL METHOD lo_service->remove_record
+      EXPORTING
+        input = ls_req.
+  CATCH cx_ai_system_fault INTO DATA(lo_error).
+    WRITE: / 'Error'.
+ENDTRY.
+
+WRITE:/ 'Done'.
+
+COMMIT WORK.
