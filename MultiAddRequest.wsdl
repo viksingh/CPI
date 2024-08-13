@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://saki.demo" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MultiLine2" targetNamespace="http://saki.demo">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://saki.demo">
+      <xsd:element name="MultiAdd">
+        <xsd:complexType>
+          <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+          	<xsd:element name="in" type="xsd:int" />
+          	<xsd:element name="Name" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="NewOperationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="MultiAddRequest">
+    <wsdl:part element="tns:MultiAdd" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="NewOperationResponse">
+    <wsdl:part element="tns:NewOperationResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="MultiLine2">
+    <wsdl:operation name="MultiAdd">
+      <wsdl:input message="tns:MultiAddRequest"/>
+
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MultiLine2SOAP" type="tns:MultiLine2">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="MultiAdd">
+      <soap:operation soapAction="http://saki.demo/NewOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MultiLine2">
+    <wsdl:port binding="tns:MultiLine2SOAP" name="MultiLine2SOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
