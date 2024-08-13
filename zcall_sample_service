@@ -1,0 +1,30 @@
+*&---------------------------------------------------------------------*
+*& Report zcall_sample_service
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zcall_sample_service.
+
+
+DATA: lo_service TYPE REF TO zco_sample_service.
+
+
+DATA: ls_req TYPE zadd_counter_request.
+
+CREATE OBJECT lo_service.
+
+ls_req-in = 1.
+ls_req-visitor = 'Vikas Singh'.
+
+TRY.
+
+    CALL METHOD lo_service->add_counter
+      EXPORTING
+        input = ls_req.
+  CATCH cx_ai_system_fault INTO DATA(lo_error).
+    WRITE: / 'Error'.
+ENDTRY.
+
+WRITE:/ 'Done'.
+
+COMMIT WORK.
