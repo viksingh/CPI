@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://inbound.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Inbound" targetNamespace="http://inbound.com">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://inbound.com">
+      <xsd:element name="AddData">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="id" type="xsd:int" />
+          	<xsd:element name="Text" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AddDataResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="AddDataRequest">
+    <wsdl:part element="tns:AddData" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="AddDataResponse">
+
+  </wsdl:message>
+  <wsdl:portType name="Inbound">
+    <wsdl:operation name="AddData">
+      <wsdl:input message="tns:AddDataRequest"/>
+
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InboundSOAP" type="tns:Inbound">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AddData">
+      <soap:operation soapAction="http://inbound.com/NewOperation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Inbound">
+    <wsdl:port binding="tns:InboundSOAP" name="InboundSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
