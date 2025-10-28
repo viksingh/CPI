@@ -1,0 +1,50 @@
+/*----------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for license information.
+ *---------------------------------------------------------------------------------------*/
+
+package com.mycompany.app;
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import java.util.Base64;
+
+public class App {
+
+    private static final String CPI_BASE_URL = "https://xxxxxxxxxtrial.integrationsuite-trial01.cfapps.us10-001.hana.ondemand.com/itspaces/odata/Operations/com.sap.it.opera";
+    private static final String USERNAME = ";
+    private static final String PASSWORD = "";
+
+
+    public static void main(String[] args) {
+        System.out.println("Hello Remote World!");
+        try {
+            String auth = USERNAME + ":" + PASSWORD;
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+
+//            String url = CPI_BASE_URL + "/IntegrationDesigntimeArtifacts?$filter=ArtifactType eq 'IFlow' and Status eq 'DEPLOYED'";
+            String url = CPI_BASE_URL + "/IntegrationDesigntimeArtifacts";
+
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(url);
+            request.setHeader("Authorization", "Basic " + encodedAuth);
+            request.setHeader("Accept", "application/json");
+
+            CloseableHttpResponse response = client.execute(request);
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            System.out.println("Deployed iFlows:");
+            System.out.println(responseBody);
+
+            client.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+    
+
